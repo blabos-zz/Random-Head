@@ -1,4 +1,5 @@
 #include "summoner.h"
+#include <stdlib.h>
 
 
 Summoner::Summoner(){
@@ -16,7 +17,7 @@ Summoner::Summoner(){
 }
 
 Summoner::~Summoner(){
-   cout << "A Summoner was death..." << endl;
+   cout << "An Summoner was killed..." << endl;
    
    // unload the triangle library
    dlclose(libmonster);
