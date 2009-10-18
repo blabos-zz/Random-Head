@@ -17,11 +17,11 @@ void yadb_start(char* filename) {
 	strncpy(yadb()->filename, filename, MAX_STR);
 }
 
-BOOLEAN yadb_load() {
+int yadb_load() {
 	load(yadb());
 }
 
-BOOLEAN yadb_save() {
+int yadb_save() {
 	save(yadb());
 }
 
@@ -29,43 +29,43 @@ void yadb_dump() {
 	dump_db(yadb());
 }
 
-BOOLEAN yadb_insert(char* key, char* val) {
+int yadb_insert(char* key, char* val) {
 	return ins_node(yadb(), key, val);
 }
 
-BOOLEAN yadb_update(char* key, char* val) {
-	BOOLEAN ret = FALSE;
+int yadb_update(char* key, char* val) {
+	int ret = 0;
 	
 	node_t* node = find_node(yadb(), key);
 	
 	if (node) {
 		upd_node(node, key, val);
-		ret = TRUE;
+		ret = 1;
 	}
 	
 	return ret;
 }
 
-BOOLEAN yadb_delete(char* key) {
-	BOOLEAN ret = FALSE;
+int yadb_delete(char* key) {
+	int ret = 0;
 	
 	node_t* node = find_node(yadb(), key);
 	
 	if (node) {
 		del_node(yadb(), node);
-		ret = TRUE;
+		ret = 1;
 	}
 	
 	return ret;
 }
-BOOLEAN yadb_select(char* key, record_t* record) {
-	BOOLEAN ret = FALSE;
+int yadb_select(char* key, record_t* record) {
+	int ret = 0;
 	
 	node_t* node = find_node(yadb(), key);
 	
 	if (node) {
 		memcpy(record, &(node->data), sizeof(record_t));
-		ret = TRUE;
+		ret = 1;
 	}
 	
 	return ret;

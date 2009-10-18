@@ -8,10 +8,7 @@
 #ifndef PUB_TYPES_H_
 #define PUB_TYPES_H_
 
-#define MAX_STR		20
-#define BOOLEAN		int
-#define TRUE		1
-#define	FALSE		0
+#define MAX_STR		15
 
 typedef char yastr_t[MAX_STR + 1];
 

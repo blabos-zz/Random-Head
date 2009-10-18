@@ -33,8 +33,8 @@ void del_db(yadb_t* db) {
 	free(db);
 }
 
-BOOLEAN	ins_node(yadb_t* db, char* key, char* val) {
-	BOOLEAN ret = FALSE;
+int	ins_node(yadb_t* db, char* key, char* val) {
+	int ret = 0;
 	
 	node_t* node = _new_node();
 	
@@ -56,7 +56,7 @@ BOOLEAN	ins_node(yadb_t* db, char* key, char* val) {
 		
 		db->size++;
 		
-		ret = TRUE;
+		ret = 1;
 	}
 	
 	return ret;
@@ -99,7 +99,7 @@ node_t* find_node(yadb_t* db, char* key) {
 }
 
 void dump_node(node_t* node) {
-	printf("%10p <- %10p -> %10p: {%20s -> %20s}\n",
+	printf("%10p <- %10p -> %10p: {%15s -> %15s}\n",
 				node->prev, node, node->next,
 				node->data.key,
 				node->data.val);
@@ -122,8 +122,8 @@ void dump_db(yadb_t* db) {
 	}
 }
 
-BOOLEAN	load(yadb_t* db) {
-	BOOLEAN ret = FALSE;
+int	load(yadb_t* db) {
+	int ret = 0;
 	FILE* fp;
 	size_t count;
 	int rows;
@@ -140,13 +140,15 @@ BOOLEAN	load(yadb_t* db) {
 		{
 			int i;
 			record_t record;
-			BOOLEAN status;
+			int status;
 			
 			for (i = 0; i < rows; i++) {
 				count = fread((void*)(&record), sizeof(record_t), 1, fp);
 				if (count == 1) {
+					printf("Key: %s\n", record.key);
+					printf("Val: %s\n", record.val);
 					status = ins_node(db, record.key, record.val);
-					if (status != TRUE) {
+					if (status != 1) {
 						fclose(fp);
 						return ret;
 					}
@@ -157,7 +159,7 @@ BOOLEAN	load(yadb_t* db) {
 				}
 			}
 			
-			ret = TRUE;
+			ret = 1;
 		}
 		
 		fclose(fp);
@@ -165,8 +167,8 @@ BOOLEAN	load(yadb_t* db) {
 	
 	return ret;
 }
-BOOLEAN	save(yadb_t* db) {
-	BOOLEAN ret = FALSE;
+int	save(yadb_t* db) {
+	int ret = 0;
 	FILE* fp;
 	size_t count;
 	
@@ -190,7 +192,7 @@ BOOLEAN	save(yadb_t* db) {
 				}
 			}
 			
-			ret = TRUE;
+			ret = 1;
 		}
 		
 		fclose(fp);

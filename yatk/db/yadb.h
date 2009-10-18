@@ -11,15 +11,15 @@
 #include "pub_types.h"
 
 void yadb_start(char*);
-BOOLEAN yadb_load();
-BOOLEAN yadb_save();
+int yadb_load();
+int yadb_save();
 
 void yadb_dump();
 
-BOOLEAN yadb_insert(char*, char*);
-BOOLEAN yadb_update(char*, char*);
-BOOLEAN yadb_delete(char*);
-BOOLEAN yadb_select(char*, record_t*);
+int yadb_insert(char*, char*);
+int yadb_update(char*, char*);
+int yadb_delete(char*);
+int yadb_select(char*, record_t*);
 
 
 #endif /* YADB_H_ */
