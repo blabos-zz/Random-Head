@@ -1,0 +1,87 @@
+# basic C types
+record_t    T_RECORD
+status_t    T_STATUS
+
+#############################################################################
+INPUT
+T_RECORD
+    if (SvROK($arg) && SvTYPE(SvRV($arg)) == SVt_PVHV) {
+        SV** svp = NULL;
+        
+        if (svp = hv_fetch((HV*)(SvRV($arg)) , \"key\", 3, FALSE)) {
+            int len;
+            strncpy($var.key, SvPV(*svp, len), MAX_STR);
+        }
+        else {
+           Perl_croak(aTHX_ \"%s: Cannot fetch \'record.key\'\",
+                ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]});
+        }
+        
+        if (svp = hv_fetch((HV*)(SvRV($arg)) , \"val\", 3, FALSE)) {
+            int len;
+            strncpy($var.val, SvPV(*svp, len), MAX_STR);
+        }
+        else {
+           Perl_croak(aTHX_ \"%s: Cannot fetch \'record.key\'\",
+                ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]});
+        }
+    }
+    else {
+        Perl_croak(aTHX_ \"%s: %s is not a hash reference\",
+            ${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
+            \"$var\");
+    }
+    
+T_STATUS
+    $var = SvNULL;
+    
+#############################################################################
+OUTPUT
+T_RECORD
+    HV* hash = (HV*)sv_2mortal((SV*)newHV());
+    
+    hv_store(hash, \"key\", 3, newSVpv($var.key, 0), FALSE);
+    hv_store(hash, \"val\", 3, newSVpv($var.val, 0), FALSE);
+    
+    $arg = sv_2mortal(newRV((SV*)hash));
+    
+T_STATUS
+    HV* hash = (HV*)sv_2mortal((SV*)newHV());
+    
+    hv_store_ent(
+        hash,
+        newSVpv(\"filename\", 0),
+        newSVpv($var.filename, 0),
+        FALSE
+    );
+    
+    hv_store_ent(
+        hash,
+        newSVpv(\"elements\", 0),
+        newSViv($var.elements),
+        FALSE
+    );
+    
+    hv_store_ent(
+        hash,
+        newSVpv(\"header\", 0),
+        newSViv($var.header_bytes),
+        FALSE
+    );
+    
+    hv_store_ent(
+        hash,
+        newSVpv(\"body\", 0),
+        newSViv($var.body_bytes),
+        FALSE
+    );
+    
+    hv_store_ent(
+        hash,
+        newSVpv(\"size\", 0),
+        newSViv($var.total_bytes),
+        FALSE
+    );
+    
+    $arg = sv_2mortal(newRV((SV*)hash));
+    
