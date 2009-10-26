@@ -40,8 +40,8 @@ OUTPUT
 T_RECORD
     HV* hash = (HV*)sv_2mortal((SV*)newHV());
     
-    hv_store(hash, \"key\", 3, newSVpv($var.key, 0), FALSE);
-    hv_store(hash, \"val\", 3, newSVpv($var.val, 0), FALSE);
+    hv_store(hash, \"key\", 3, newSVpv($var.key, 0), 0);
+    hv_store(hash, \"val\", 3, newSVpv($var.val, 0), 0);
     
     $arg = sv_2mortal(newRV((SV*)hash));
     
@@ -52,35 +52,35 @@ T_STATUS
         hash,
         newSVpv(\"filename\", 0),
         newSVpv($var.filename, 0),
-        FALSE
+        0
     );
     
     hv_store_ent(
         hash,
         newSVpv(\"elements\", 0),
         newSViv($var.elements),
-        FALSE
+        0
     );
     
     hv_store_ent(
         hash,
         newSVpv(\"header\", 0),
         newSViv($var.header_bytes),
-        FALSE
+        0
     );
     
     hv_store_ent(
         hash,
         newSVpv(\"body\", 0),
         newSViv($var.body_bytes),
-        FALSE
+        0
     );
     
     hv_store_ent(
         hash,
         newSVpv(\"size\", 0),
         newSViv($var.total_bytes),
-        FALSE
+        0
     );
     
     $arg = sv_2mortal(newRV((SV*)hash));
