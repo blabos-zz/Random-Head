@@ -25,6 +25,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
     del
     get
     status
+    range
 ) ] );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );

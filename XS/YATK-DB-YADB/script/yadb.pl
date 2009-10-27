@@ -22,3 +22,9 @@ if (defined $record) {
     print 'KEY: ', $record->{'key'}, $/;
     print 'VAL: ', $record->{'val'}, $/;
 }
+
+my @list = range(1,6,3);
+
+foreach (@list) {
+    print 'List: ', $_, $/;
+}
